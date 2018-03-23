@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace Samples.ViewModels
 {
-	public class SearchPageSampleViewModel : BaseViewModel
-	{
+    public class SearchPageSampleViewModel : BaseViewModel
+    {
         public ICommand SearchCommand { get; set; }
+        private readonly IEnumerable<string> _nomes;
 
         private string _TextSearch;
         public string TextSearch
@@ -19,13 +18,13 @@ namespace Samples.ViewModels
             {
                 _TextSearch = value;
                 OnPropertyChanged();
-                FiltraLista(value);
+                Listar(value);
                 //Debug.WriteLine("SEARCH TEXT: " + value);
             }
         }
 
-        private List<string> _lista;
-        public List<string> Lista
+        private IEnumerable<string> _lista;
+        public IEnumerable<string> Lista
         {
             get { return _lista; }
             set {
@@ -34,38 +33,21 @@ namespace Samples.ViewModels
             }
         }
 
-        private List<string> _dados;
-        public List<string> Dados
-        {
-            get { return _dados; }
-            set
-            {
-                _dados = value;
-                OnPropertyChanged();
-            }
-        }
 
         public SearchPageSampleViewModel()
 		{
-            Dados = new List<string>
+            _nomes = new List<string>
             {
                 "Bruno", "Jose", "Augusto", "Pereira", "Maria", "Joana", "Antonia", "Fernanda", "Lucia", "Pedro"
             };
-            Lista = Dados;
+            Lista = _nomes;
         }
 
-        public void FiltraLista(string obj = "")
+        public void Listar(string obj = "")
         {
-            
-
-            if (string.IsNullOrEmpty(obj))
-            {
-                Lista = Dados;
-            }
-            else
-            {
-                Lista = Dados.Where(d => d.ToLower().Contains(obj.ToLower())).ToList();
-            }
+            IEnumerable<string> listaFiltrada = this._lista;
+            if (!string.IsNullOrEmpty(obj))
+                listaFiltrada = this._lista.Where(d => d.ToLower().Contains(obj.ToLower()));
         }        
 	}
 }

@@ -8,7 +8,6 @@
 	<StackLayout Spacing="20">
     <ListView
             x:Name="listaExclusiva"
-            CachingStrategy="RecycleElement"
             ItemsSource="{Binding Lista}"
             SeparatorVisibility="None"
             BackgroundColor="#EEEEEE"
