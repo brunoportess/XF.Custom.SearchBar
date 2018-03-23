@@ -6,7 +6,13 @@
 		SearchPlaceHolderText="Type to Search"
 		SearchCommand="{Binding SearchCommand}" SearchText="{Binding TextSearch, Mode=TwoWay}">
 	<StackLayout Spacing="20">
-		<Label Text="This is the search page" HorizontalOptions="Center" FontAttributes="Bold"/>
-		<Label Text="{Binding SearchResult}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+    <ListView
+            x:Name="listaExclusiva"
+            CachingStrategy="RecycleElement"
+            ItemsSource="{Binding Lista}"
+            SeparatorVisibility="None"
+            BackgroundColor="#EEEEEE"
+            HasUnevenRows="true">
+    </ListView>
 	</StackLayout>
 </customrenderers:SearchPage>

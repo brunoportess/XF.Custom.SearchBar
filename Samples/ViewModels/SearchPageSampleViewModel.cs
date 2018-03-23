@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -7,37 +9,64 @@ namespace Samples.ViewModels
 {
 	public class SearchPageSampleViewModel : BaseViewModel
 	{
-		public SearchPageSampleViewModel()
-		{
-			
-		}
-
         public ICommand SearchCommand { get; set; }
+
         private string _TextSearch;
         public string TextSearch
         {
-            get { return _TextSearch; }
-            set {
+            get => _TextSearch;
+            set
+            {
                 _TextSearch = value;
                 OnPropertyChanged();
-                Debug.WriteLine("SEARCH TEXT: " + value);
+                FiltraLista(value);
+                //Debug.WriteLine("SEARCH TEXT: " + value);
             }
         }
-        string searchResult;
 
-		public string SearchResult
+        private List<string> _lista;
+        public List<string> Lista
+        {
+            get { return _lista; }
+            set {
+                _lista = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<string> _dados;
+        public List<string> Dados
+        {
+            get { return _dados; }
+            set
+            {
+                _dados = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public SearchPageSampleViewModel()
 		{
-			get
-			{
-				return searchResult;
-			}
+            Dados = new List<string>
+            {
+                "Bruno", "Jose", "Augusto", "Pereira", "Maria", "Joana", "Antonia", "Fernanda", "Lucia", "Pedro"
+            };
+            Lista = Dados;
+        }
 
-			set
-			{
-				searchResult = value;
-				OnPropertyChanged();
-			}
-		}
+        public void FiltraLista(string obj = "")
+        {
+            
+
+            if (string.IsNullOrEmpty(obj))
+            {
+                Lista = Dados;
+            }
+            else
+            {
+                Lista = Dados.Where(d => d.ToLower().Contains(obj.ToLower())).ToList();
+            }
+        }        
 	}
 }
 
