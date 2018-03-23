@@ -19,12 +19,11 @@ namespace Samples.ViewModels
                 _TextSearch = value;
                 OnPropertyChanged();
                 Listar(value);
-                //Debug.WriteLine("SEARCH TEXT: " + value);
             }
         }
 
-        private IEnumerable<string> _lista;
-        public IEnumerable<string> Lista
+        private List<string> _lista;
+        public List<string> Lista
         {
             get { return _lista; }
             set {
@@ -40,14 +39,14 @@ namespace Samples.ViewModels
             {
                 "Bruno", "Jose", "Augusto", "Pereira", "Maria", "Joana", "Antonia", "Fernanda", "Lucia", "Pedro"
             };
-            Lista = _nomes;
+            Lista = _nomes.ToList();
         }
 
         public void Listar(string obj = "")
         {
-            IEnumerable<string> listaFiltrada = this._lista;
+            Lista = this._lista;
             if (!string.IsNullOrEmpty(obj))
-                listaFiltrada = this._lista.Where(d => d.ToLower().Contains(obj.ToLower()));
+                Lista = this._lista.Where(d => d.ToLower().Contains(obj.ToLower())).ToList();
         }        
 	}
 }
